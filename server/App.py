@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 from flask import Flask, jsonify
 from flask import abort
-from flask import make_response
 from flask import request
 import json
 
