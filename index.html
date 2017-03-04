@@ -6,13 +6,14 @@
     <script src="js/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
     <style href="fonts/Roboto-Regular.ttf"></style>
     <style href="fonts/Roboto-Medium.ttf"></style>
+    <link href="css/main.css" rel="stylesheet"/>
     <link href="css/nodes_style.css" rel="stylesheet"/>
     <link href="js/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
     <title>Tree Example</title>
 </head>
 
 <body>
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -38,7 +39,7 @@
                     </div>
                 </form>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Link</a></li>
+
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false">Dropdown <span class="caret"></span></a>
@@ -53,8 +54,13 @@
                 </ul>
             </ul>
         </div>
+        <button type="submit" class="btn btn-danger navbar-btn login-btn">Sign In</button>
     </div>
 </nav>
+<div class="container">
+    <div id="hierarchy"></div>
+    <div id="paperinfo"></div>
+</div>
 
 <!-- load the d3.js library -->
 <script src="http://d3js.org/d3.v3.min.js"></script>
@@ -74,7 +80,7 @@
     var diagonal = d3.svg.diagonal()
             .projection(function(d) { return [d.y, d.x]; });
 
-    var svg = d3.select("body").append("svg")
+    var svg = d3.select("#hierarchy").append("svg")
             .attr("width", width + margin.right + margin.left)
             .attr("height", height + margin.top + margin.bottom)
             .append("g")
