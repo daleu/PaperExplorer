@@ -32,7 +32,7 @@
             <ul class="nav navbar-nav">
                 <form class="navbar-form navbar-left">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search...">
+                        <input id="textboxtitle" type="text" class="form-control" placeholder="Search...">
                         <span class="input-group-btn">
                                 <button class="btn btn-default" type="submit">Go!</button>
                             </span>
@@ -54,7 +54,7 @@
                 </ul>
             </ul>
         </div>
-        <button type="submit" class="btn btn-danger navbar-btn login-btn">Sign In</button>
+        <button id="showinfo" class="btn btn-danger navbar-btn login-btn">Sign In</button>
     </div>
 </nav>
 <div class="container">
@@ -207,6 +207,20 @@
         }
         update(d);
     }
+
+    $("#textboxtitle").click(function(){
+        var text = $('#textboxtitle').val();
+        $.ajax({
+            url: "http://127.0.0.1:5000/search?title="+text,
+            context: document.body
+        }).done(function( data ) {
+            if ( console && console.log ) {
+                console.log( "Sample of data:" + data);
+            }
+        }).error(function(e){
+            alert("Error");
+        });
+    });
 </script>
 
 </body>
