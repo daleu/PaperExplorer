@@ -34,7 +34,7 @@
                     <div class="input-group">
                         <input id="textboxtitle" type="text" class="form-control" placeholder="Search...">
                         <span class="input-group-btn">
-                                <button class="btn btn-default" type="submit">Go!</button>
+                                <button id="textboxbutton" class="btn btn-default">Go!</button>
                             </span>
                     </div>
                 </form>
@@ -59,13 +59,45 @@
 </nav>
 <div class="container">
     <div id="hierarchy"></div>
-    <div id="paperinfo"></div>
+    <div id="paperinfo">
+        <div style="height:30px; background-color: #03A9B5; margin-top:5vh">
+        </div>
+    </div>
 </div>
 
 <!-- load the d3.js library -->
 <script src="http://d3js.org/d3.v3.min.js"></script>
 
 <script>
+
+    /*var treeData = {
+            "name": "Top Level",
+            "parent": "null",
+            "children": [
+                {
+                    "name": "Level 2: A",
+                    "parent": "Top Level",
+                    "children": [
+                        {
+                            "name": "Son of A",
+                            "parent": "Level 2: A"
+                        },
+                        {
+                            "name": "Daughter of A",
+                            "parent": "Level 2: A"
+                        }
+                    ]
+                },
+                {
+                    "name": "Level 2: B",
+                    "parent": "Top Level"
+                }
+            ]
+        };
+*/
+
+    var treeData = null;
+
     var text = null;
 
     var margin = {top: 20, right: 120, bottom: 20, left: 120},
@@ -90,10 +122,10 @@
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    d3.json("harcoded/data.json", function(error, flare) {
-        if (error) throw error;
+  //  d3.json(, function(error, flare) {
+  //      if (error) throw error;
 
-        root = flare;
+   /*   root = treeData;
         root.x0 = height / 2;
         root.y0 = 0;
 
@@ -106,8 +138,16 @@
         }
 
         root.children.forEach(collapse);
-        update(root);
-    });
+        update(root);*/
+ //   });
+
+    function collapse(d) {
+        if (d.children) {
+            d._children = d.children;
+            d._children.forEach(collapse);
+            d.children = null;
+        }
+    }
 
     d3.select(self.frameElement).style("height", "800px");
 
@@ -203,19 +243,96 @@
         text = d.name;
         //alert(text);
         if (d.children) {
-            $('#textboxtitle').trigger('click');
             d._children = d.children;
             d.children = null;
         } else {
+            //d.children.forEach($('#showinfo').trigger('click'));
             d.children = d._children;
             d._children = null;
         }
         update(d);
     }
 
-    $("#textboxtitle").click(function(){
+    String.prototype.splice = function(idx, rem, str) {
+        return this.slice(0, idx) + str + this.slice(idx + Math.abs(rem));
+    };
+
+    $("#showinfo").click(function(){
         text = $('#textboxtitle').val();
         $.ajax({
+            type:'GET',
+            url:"http://127.0.0.1:5000/search?title="+text,
+            success: function(response) {
+               /* if(treeData==null){
+                    treeData = {
+                        "name": "Top Level",
+                        "parent": "null",
+                        "children": [
+                            {
+                                "name": "Level 2: A",
+                                "parent": "Top Level",
+                                "children": [
+                                    {
+                                        "name": "Son of A",
+                                        "parent": "Level 2: A"
+                                    },
+                                    {
+                                        "name": "Daughter of A",
+                                        "parent": "Level 2: A"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Level 2: B",
+                                "parent": "Top Level"
+                            }
+                        ]
+                    };*/
+                    treeData=response;
+                    /*
+                    *
+                    *
+                    *
+                    *
+                    *
+                    *
+                    *
+                    *
+                    *
+                    *
+                    *
+                    *
+                    *
+                    *
+                    *
+                    *
+                    *
+                    *
+                    *
+                    *
+                    *
+                    *
+                    *
+                    *
+                    *
+                    *
+                    *
+                    *
+                    *
+                    *
+                    *
+                    *
+                    * */
+                    root = treeData;
+                    root.x0 = height / 2;
+                    root.y0 = 0;
+                    root.children.forEach(collapse);
+                    update(root);
+                    update(treeData);
+                console.log(response);
+                }
+        });
+       /* $.ajax({
             url: "http://127.0.0.1:5000/search?title="+text,
             context: document.body
         }).done(function( data ) {
@@ -224,7 +341,7 @@
             }
         }).error(function(e){
             alert("Error");
-        });
+        });*/
     });
 </script>
 
