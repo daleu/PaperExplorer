@@ -2,11 +2,23 @@ body{
     background-color:  !important;
 }
 
+html{
+    overflow: hidden;
+}
+
 .container{
-    height: 100%;
+    height: 95vh;
     width: 100vw !important;
     margin-left: 0;
-    margin-top: 0;
+    margin-top: 3vh;
+    margin-right: 0 !important;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+}
+
+#hierarchy{
+    width: 70vw;
+    overflow: scroll;
 }
 
 .navbar{
@@ -15,7 +27,7 @@ body{
 
 .navbar .login-btn {
     position: absolute;
-    top: 0px;
+    top: 0;
     right: 15px;
 }
 @media (max-width: 767px) {
