@@ -1,6 +1,5 @@
 from flask import Flask, jsonify
 from flask import abort
-from flask import make_response
 from flask import request
 
 import PaperService
@@ -17,8 +16,8 @@ def hello():
 def search():
     title = request.args.get('title')
     if title:
-        papers = PaperService.get_paper(title)
-        return make_response(jsonify(papers.__dict__), 200)
+        papers = PaperService.list(title)
+        return jsonify(papers)
     else:
         abort(400)
 
