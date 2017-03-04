@@ -182,6 +182,14 @@
                 .text(function(d) { return d.title; })
                 .style("fill-opacity", 1e-6);
 
+        nodeEnter.append("text")
+                .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
+                .attr("dy", ".35em")
+                .attr("display", "hidden")
+                .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
+                .text(function(d) { return d.id; })
+                .style("fill-opacity", 1e-6);
+
         // Transition nodes to their new position.
         var nodeUpdate = node.transition()
                 .duration(duration)
@@ -239,15 +247,16 @@
         });
     }
 
+    var id = null;
+
     // Toggle children on click.
     function click(d) {
-        text = d.name;
-        //alert(text);
         if (d.children) {
             d._children = d.children;
             d.children = null;
         } else {
-            //d.children.forEach($('#showinfo').trigger('click'));
+            var id = d.id;
+            getById(id);
             d.children = d._children;
             d._children = null;
         }
@@ -264,86 +273,43 @@
             type:'GET',
             url:"http://127.0.0.1:5000/search?title="+text,
             success: function(response) {
-               /* if(treeData==null){
-                    treeData = {
-                        "name": "Top Level",
-                        "parent": "null",
-                        "children": [
-                            {
-                                "name": "Level 2: A",
-                                "parent": "Top Level",
-                                "children": [
-                                    {
-                                        "name": "Son of A",
-                                        "parent": "Level 2: A"
-                                    },
-                                    {
-                                        "name": "Daughter of A",
-                                        "parent": "Level 2: A"
-                                    }
-                                ]
-                            },
-                            {
-                                "name": "Level 2: B",
-                                "parent": "Top Level"
-                            }
-                        ]
-                    };*/
-                    treeData=response;
-                    /*
-                    *
-                    *
-                    *
-                    *
-                    *
-                    *
-                    *
-                    *
-                    *
-                    *
-                    *
-                    *
-                    *
-                    *
-                    *
-                    *
-                    *
-                    *
-                    *
-                    *
-                    *
-                    *
-                    *
-                    *
-                    *
-                    *
-                    *
-                    *
-                    *
-                    *
-                    *
-                    *
-                    * */
+                if(treeData==null) {
+                    treeData = response;
                     root = treeData;
                     root.x0 = height / 2;
                     root.y0 = 0;
                     root.children.forEach(collapse);
                     update(root);
                     update(treeData);
-                console.log(response);
+                    console.log(response);
                 }
-        });
-       /* $.ajax({
-            url: "http://127.0.0.1:5000/search?title="+text,
-            context: document.body
-        }).done(function( data ) {
-            if ( console && console.log ) {
-                console.log( "Sample of data:" + data);
+                else {
+
+                }
             }
-        }).error(function(e){
-            alert("Error");
-        });*/
+        });
     });
+
+    function getById(id) {
+        $.ajax({
+            type:'GET',
+            url:"http://127.0.0.1:5000/search?id="+id,
+            success: function(response) {
+                treeData.children.forEach(function(child){
+                    if(child.id==id){
+                        child = response;
+                    }
+                });
+                root = treeData;
+                root.x0 = height / 2;
+                root.y0 = 0;
+                //root.children.forEach(collapse);
+                //update(root);
+                //update(response);
+                console.log(response);
+            }
+        });
+    }
 </script>
 
 </body>
