@@ -10,16 +10,22 @@ def explore(root, depth):
         properties['children'] = []
     else:
         with driver.session() as session:
-            result = session.run('MATCH (paper {id:{id}})-[:Cites]->(child) RETURN child', {'id':id})
+            result = session.run('MATCH (node {id:{id}})-[:Cites]->(child) RETURN child', {'id':id})
             children = []
             for record in result:
                 child = record['child']
                 children.append(explore(child,depth-1))
             properties['children'] = children
-    return {id:properties}
+    return properties
 
 def get_by_title(title):
     with driver.session() as session:
         result = session.run('MATCH (node: Paper) WHERE node.title =~ {title} RETURN node', {'title':title+'.*'})
+        for record in result:
+            return explore(record['node'],2)
+
+def get_by_id(id):
+    with driver.session() as session:
+        result = session.run('MATCH (node: Paper) WHERE node.id={id} RETURN node', {'id':id})
         for record in result:
             return explore(record['node'],2)
