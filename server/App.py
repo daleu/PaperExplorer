@@ -1,7 +1,9 @@
+#!/usr/bin/env python3
 from flask import Flask, jsonify
 from flask import abort
 from flask import make_response
 from flask import request
+import json
 
 import PaperService
 
@@ -17,8 +19,13 @@ def hello():
 def search():
     title = request.args.get('title')
     if title:
-        papers = PaperService.get_paper(title)
-        return make_response(jsonify(papers.__dict__), 200)
+        nodes = PaperService.get_paper(title)
+        r = make_response(json.dumps(nodes))
+        r.headers = {'Content-Type':'application/json',
+                     'Access-Control-Allow-Origin':'*',
+                     'Access-Control-Allow-Methods':'GET, POST, PUT, OPTIONS',
+                     'Access-Control-Allow-Headers':'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'}
+        return r
     else:
         abort(400)
 

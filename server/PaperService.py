@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import DatabaseService
 
 neo4j = DatabaseService
