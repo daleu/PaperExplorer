@@ -6,14 +6,3 @@ body, html, .container-fluid {
     font-family: 'Roboto';
     src: url("../fonts/Roboto-Regular.ttf");
 }
-
-.firstrow{
-    background-color: aqua;
-    height: 10%;
-}
-
-.maintitle{
-    font-family: 'Roboto', sans-serif;
-    font-size: 48px !important;
-    color:white;
-}
