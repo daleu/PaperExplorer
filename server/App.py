@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    print(DatabaseService.driver.url)
+    print(DatabaseService.db.connection.__dict__)
     return "Hello World!"
 
 
