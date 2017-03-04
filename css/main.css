@@ -1,0 +1,60 @@
+body{
+    background-color:  !important;
+}
+
+html{
+    overflow: hidden;
+}
+
+.container{
+    height: 95vh;
+    width: 100vw !important;
+    margin-left: 0;
+    margin-top: 3vh;
+    margin-right: 0 !important;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+}
+
+#hierarchy{
+    width: 70vw;
+    overflow: scroll;
+}
+
+.navbar{
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 1px 2px 0 rgba(0, 0, 0, 0.19);
+}
+
+.navbar .login-btn {
+    position: absolute;
+    top: 0;
+    right: 15px;
+}
+@media (max-width: 767px) {
+    .navbar .login-btn {
+        right: 75px;
+    }
+}
+
+.navbar-brand,
+.navbar-nav li a {
+    line-height: 5vh;
+    height: 5vh;
+    padding-top: 0;
+}
+
+#hierarchy{
+    left:0 !important;
+    margin-top: 5vh;
+}
+
+#paperinfo {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 30vw;
+    height: 100vh;
+    background-color: #F8F8F8;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 4px 4px 0 rgba(0, 0, 0, 0.19);
+    text-align: center;
+}
