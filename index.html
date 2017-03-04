@@ -60,7 +60,8 @@
 <div class="container">
     <div id="hierarchy"></div>
     <div id="paperinfo">
-        <div style="height:30px; background-color: #03A9B5; margin-top:5vh">
+        <div style="height:70px; background-color: #03A9B5; margin-top:50px">
+            <div></div>
         </div>
     </div>
 </div>
@@ -178,7 +179,7 @@
                 .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
                 .attr("dy", ".35em")
                 .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
-                .text(function(d) { return d.name; })
+                .text(function(d) { return d.title; })
                 .style("fill-opacity", 1e-6);
 
         // Transition nodes to their new position.
