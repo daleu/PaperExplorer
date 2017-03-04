@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet/less" href="css/bar.less">
+    <script src="js/d3-hierarchy.min.js"></script>
+    <!-- <script src="http://d3js.org/d3.v3.min.js"></script> -->
+    <!--<script src="js/index.js"></script> -->
+</head>
+<body>
+<!--<nav class="navbar navbar-default" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+<!-- <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="javascript:void(0)">Brand</a>
+</div>
+<!-- Collect the nav links, forms, and other content for toggling -->
+<!--<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+        <li class="active"><a href="javascript:void(0)">Link</a></li>
+        <li><a href="javascript:void(0)">Link</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li><a href="javascript:void(0)">Action</a></li>
+                <li><a href="javascript:void(0)">Another action</a></li>
+                <li><a href="javascript:void(0)">Something else here</a></li>
+                <li class="divider"></li>
+                <li><a href="javascript:void(0)">Separated link</a></li>
+            </ul>
+        </li>
+    </ul>
+    <form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+    <ul class="nav navbar-nav navbar-right">
+        <li><a href="javascript:void(0)">Link</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li><a href="javascript:void(0)">Action</a></li>
+                <li><a href="javascript:void(0)">Another action</a></li>
+                <li><a href="javascript:void(0)">Something else here</a></li>
+                <li class="divider"></li>
+                <li><a href="javascript:void(0)">Separated link</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+</nav>
+<div class="container-fluid">
+
+
+
+</div>-->
+</body>
+<script>
+
+    var treeData = [
+        {
+            "name": "Top Level",
+            "parent": "null",
+            "children": [
+                {
+                    "name": "Level 2: A",
+                    "parent": "Top Level",
+                    "children": [
+                        {
+                            "name": "Son of A",
+                            "parent": "Level 2: A"
+                        },
+                        {
+                            "name": "Daughter of A",
+                            "parent": "Level 2: A"
+                        }
+                    ]
+                },
+                {
+                    "name": "Level 2: B",
+                    "parent": "Top Level"
+                }
+            ]
+        }
+    ];
+
+    // ************** Generate the tree diagram  *****************
+    var margin = {top: 20, right: 120, bottom: 20, left: 120},
+            width = 960 - margin.right - margin.left,
+            height = 500 - margin.top - margin.bottom;
+
+    var i = 0;
+
+    var tree = d3.layout.tree()
+            .size([height, width]);
+
+    var diagonal = d3.svg.diagonal()
+            .projection(function(d) { return [d.y, d.x]; });
+
+    var svg = d3.select("body").append("svg")
+            .attr("width", width + margin.right + margin.left)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    root = treeData[0];
+
+    update(root);
+
+    function update(source) {
+
+        // Compute the new tree layout.
+        var nodes = tree.nodes(root).reverse(),
+                links = tree.links(nodes);
+
+        // Normalize for fixed-depth.
+        nodes.forEach(function(d) { d.y = d.depth * 180; });
+
+        // Declare the nodesâ€¦
+        var node = svg.selectAll("g.node")
+                .data(nodes, function(d) { return d.id || (d.id = ++i); });
+
+        // Enter the nodes.
+        var nodeEnter = node.enter().append("g")
+                .attr("class", "node")
+                .attr("transform", function(d) {
+                    return "translate(" + d.y + "," + d.x + ")"; });
+
+        nodeEnter.append("circle")
+                .attr("r", 10)
+                .style("fill", "#fff");
+
+        nodeEnter.append("text")
+                .attr("x", function(d) {
+                    return d.children || d._children ? -13 : 13; })
+                .attr("dy", ".35em")
+                .attr("text-anchor", function(d) {
+                    return d.children || d._children ? "end" : "start"; })
+                .text(function(d) { return d.name; })
+                .style("fill-opacity", 1);
+
+        // Declare the linksâ€¦
+        var link = svg.selectAll("path.link")
+                .data(links, function(d) { return d.target.id; });
+
+        // Enter the links.
+        link.enter().insert("path", "g")
+                .attr("class", "link")
+                .attr("d", diagonal);
+
+    }
+</script>
+</html>
