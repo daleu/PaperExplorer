@@ -30,13 +30,11 @@ def search():
 
         r = make_response(json.dumps(nodes))
         r.status_code = 200
-        r.headers = {'Content-Type':'application/json',
-                     'Access-Control-Allow-Origin':'*',
-                     'Access-Control-Allow-Methods':'GET, POST, PUT, OPTIONS',
-                     'Access-Control-Allow-Headers':'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'}
+        r.headers = {'Content-Type': 'application/json',
+                     'Access-Control-Allow-Origin': '*',
+                     'Access-Control-Allow-Methods': 'GET, POST, PUT, OPTIONS',
+                     'Access-Control-Allow-Headers': 'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'}
         return r
-
-
 
 if __name__ == "__main__":
     app.run()
