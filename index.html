@@ -66,6 +66,8 @@
 <script src="http://d3js.org/d3.v3.min.js"></script>
 
 <script>
+    var text = null;
+
     var margin = {top: 20, right: 120, bottom: 20, left: 120},
             width = 960 - margin.right - margin.left,
             height = 650 - margin.top - margin.bottom;
@@ -198,7 +200,10 @@
 
     // Toggle children on click.
     function click(d) {
+        text = d.name;
+        //alert(text);
         if (d.children) {
+            $('#textboxtitle').trigger('click');
             d._children = d.children;
             d.children = null;
         } else {
@@ -209,7 +214,7 @@
     }
 
     $("#textboxtitle").click(function(){
-        var text = $('#textboxtitle').val();
+        text = $('#textboxtitle').val();
         $.ajax({
             url: "http://127.0.0.1:5000/search?title="+text,
             context: document.body
