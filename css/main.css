@@ -1,0 +1,19 @@
+body, html, .container-fluid {
+    height: 100%;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url("../fonts/Roboto-Regular.ttf");
+}
+
+.firstrow{
+    background-color: aqua;
+    height: 10%;
+}
+
+.maintitle{
+    font-family: 'Roboto', sans-serif;
+    font-size: 48px !important;
+    color:white;
+}
