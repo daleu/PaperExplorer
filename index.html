@@ -80,7 +80,9 @@
     var diagonal = d3.svg.diagonal()
             .projection(function(d) { return [d.y, d.x]; });
 
-    var svg = d3.select("#hierarchy").append("svg")
+    $("#hierarchy").html("<svg id='svgg' xmlns='http://www.w3.org/2000/svg' width='100%' height='100%'></svg>");
+    width = $("svg").parent().width();
+    var svg = d3.select("svg")
             .attr("width", width + margin.right + margin.left)
             .attr("height", height + margin.top + margin.bottom)
             .append("g")
