@@ -31,7 +31,7 @@ def get_by_id(id):
     with driver.session() as session:
         result = session.run('MATCH (node: Paper) WHERE node.id={id} RETURN node', {'id': id})
         for record in result:
-            return explore(record['node'], 2)
+            return explore(record['node'], 10)
 
 
 def list(title):
