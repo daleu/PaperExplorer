@@ -17,16 +17,16 @@ def hello():
 
 @app.route("/search")
 def search():
-    title = request.args.get('title')
+    name = request.args.get('name')
     id = request.args.get('id')
 
-    if not id and not title:
+    if not id and not name:
         abort(400)
     else:
         if id:
             nodes = PaperService.get_paper_by_id(id)
-        elif title:
-            nodes = PaperService.get_paper_by_title(title)
+        elif name:
+            nodes = PaperService.get_node_by_name(name)
 
         r = make_response(json.dumps(nodes))
         r.status_code = 200

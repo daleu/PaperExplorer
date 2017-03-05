@@ -14,5 +14,10 @@ def get_paper_by_id(id):
     return nodes
 
 
+def get_node_by_name(name):
+    nodes = neo4j.get_by_name(name)
+    return nodes
+
+
 def list(title):
     return neo4j.list(title)
